@@ -13,16 +13,14 @@ public class WorkSpace {
     private Array<String> code;
     int pointer;
     int countError;
-    private Robot player;
     public GraphicComponent UI;
     Bunch bunch;
 
-    public WorkSpace(GlobalVar vars){
+    public WorkSpace(){
         pointer=0;
         code=new Array<String>();
         code.add("Up");
         code.add("Jump");
-        this.bunch=bunch;
     }
 
     public void setUI(GraphicComponent UI) {
@@ -31,10 +29,6 @@ public class WorkSpace {
 
     public void setBunch(Bunch bunch){
         this.bunch=bunch;
-    }
-
-    public void setPlayer(Robot player){
-        this.player=player;
     }
 
     public void addCommand(String command){

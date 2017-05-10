@@ -13,7 +13,7 @@ public class World {
     int startY;
 
     public World(WorkSpace work){
-        player=new Robot(work);
+        player=new Robot();
         loadMap();
         setStartCoordinate();
         setPlayer();

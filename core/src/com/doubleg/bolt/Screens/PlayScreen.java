@@ -28,7 +28,7 @@ public class PlayScreen implements Screen {
     private GlobalVar vars;
 
     public PlayScreen(GlobalVar vars){
-        workSpace=new WorkSpace(vars);
+        workSpace=new WorkSpace();
         GraphicComponent tempV=new GraphicComponent(workSpace,vars);
         workSpace.setUI(tempV);
         world=new World(workSpace);
