@@ -1,7 +1,6 @@
 package com.doubleg.bolt.RobotComponents;
 
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
-import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.doubleg.bolt.Robot;
 import com.doubleg.bolt.States.RobotState;
 
@@ -10,10 +9,10 @@ import com.doubleg.bolt.States.RobotState;
  */
 
 public class StatesComponent {
-    private DefaultStateMachine stateMachine;
+    private DefaultStateMachine<Robot, RobotState> stateMachine;
 
     public StatesComponent(Robot robot){
-        stateMachine=new DefaultStateMachine(robot, RobotState.Stand);
+        stateMachine = new DefaultStateMachine<Robot, RobotState>(robot, RobotState.Stand);
     }
 
     public void update(){
@@ -25,6 +24,6 @@ public class StatesComponent {
     }
 
     public RobotState getState(){
-        return (RobotState) stateMachine.getCurrentState();
+        return stateMachine.getCurrentState();
     }
 }

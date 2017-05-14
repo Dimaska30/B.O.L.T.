@@ -4,15 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.doubleg.bolt.GlobalVar;
 import com.doubleg.bolt.States.RobotState;
-
-import java.util.HashMap;
 
 /**
  * Created by Dimaska on 09.05.2017.
@@ -28,7 +24,7 @@ public class GraphicComponent {
                 "StandFrontal","StandRight","StandLeft","StandRear"};
         for(int a=1;a<name.length+1;a++){
             try {
-                TextureRegion temp = new TextureRegion(new Texture(Gdx.files.internal(a + ".png")));
+                TextureRegion temp = new TextureRegion(new Texture(Gdx.files.internal("robots/" + a + ".png")));
                 textures.put(name[a-1],temp);
             }catch (GdxRuntimeException e){
                 e.printStackTrace();
@@ -57,7 +53,7 @@ public class GraphicComponent {
         currentTexture=textures.get(first+second);
     }
 
-    public void draw(SpriteBatch spriteBatch, Vector2 pos){
-        spriteBatch.draw(currentTexture,pos.x,pos.y, GlobalVar.TileSize,GlobalVar.TileSize);
+    public void draw(SpriteBatch spriteBatch, float x, float y) {
+        spriteBatch.draw(currentTexture, x, y, GlobalVar.TileSize, GlobalVar.TileSize);
     }
 }

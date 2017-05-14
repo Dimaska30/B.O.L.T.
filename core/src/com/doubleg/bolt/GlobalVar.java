@@ -21,8 +21,10 @@ public class GlobalVar {
     public static final String CurlUp="CurlUp";
     public static final String RollForward="RollForward";
     public static final String RollBackwards="RollBackwards";
+    public static final String Stop = "Stop";
     public OrthographicCamera camera;
     public Skin skin;
+    public static boolean play = false;
 
     GlobalVar(){
         camera=new OrthographicCamera();

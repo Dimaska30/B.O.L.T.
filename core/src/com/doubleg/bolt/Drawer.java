@@ -1,13 +1,9 @@
 package com.doubleg.bolt;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.shaders.BaseShader;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 
@@ -23,7 +19,7 @@ public class Drawer {
     World world;
     WorkSpace workSpace;
 
-    public Drawer(World world,WorkSpace workSpace,GlobalVar vars){
+    public Drawer(World world, final WorkSpace workSpace, GlobalVar vars) {
         this.world=world;
         this.workSpace=workSpace;
 
@@ -35,7 +31,6 @@ public class Drawer {
         batch.setProjectionMatrix(vars.camera.combined);
 
         renderer.setProjectionMatrix(vars.camera.combined);
-
     }
 
     public void draw(){
@@ -45,7 +40,7 @@ public class Drawer {
         drawMap(batch,world.getMaps());
 
         batch.enableBlending();
-        world.player.draw(batch);
+        world.player.draw(batch, world.getStartX(), world.getStartY());
 
         batch.end();
 
@@ -59,7 +54,9 @@ public class Drawer {
 
         renderer.end();
 
-        workSpace.UI.getUI().draw();
+        workSpace.getWindow().getUI().draw();
+        workSpace.getInput().getUI().draw();
+
     }
 
     public void setMapTexture(Texture texture,int numTileX,int numTileY){
@@ -67,8 +64,10 @@ public class Drawer {
 
         for(int indexY=0;indexY<numTileY;indexY++){
             for(int indexX=0;indexX<numTileX;indexX++){
-                mapTexture.add(new TextureRegion(texture,indexX*25,indexY*25,24,24));
+                mapTexture.add(new TextureRegion(texture, indexX * 250, indexY * 250, 250, 250));
             }
+            mapTexture.add(mapTexture.get(0));
+            mapTexture.add(mapTexture.get(0));
         }
     }
 

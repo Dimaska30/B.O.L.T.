@@ -1,9 +1,9 @@
 package com.doubleg.bolt;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Queue;
 import com.doubleg.bolt.WorkSpaceComponent.GraphicComponent;
+import com.doubleg.bolt.WorkSpaceComponent.InputComponent;
 
 /**
  * Created by Dimaska on 09.05.2017.
@@ -11,20 +11,29 @@ import com.doubleg.bolt.WorkSpaceComponent.GraphicComponent;
 
 public class WorkSpace {
     private Array<String> code;
-    int pointer;
-    int countError;
-    public GraphicComponent UI;
-    Bunch bunch;
+    private int pointer;
+    private int countError;
+    private GraphicComponent window;
+    private InputComponent input;
+    private Bunch bunch;
 
-    public WorkSpace(){
-        pointer=0;
+    public WorkSpace(GlobalVar var) {
+        pointer = -1;
+        countError = 0;
         code=new Array<String>();
-        code.add("Up");
-        code.add("Jump");
+        input = new InputComponent(this, var);
     }
 
-    public void setUI(GraphicComponent UI) {
-        this.UI = UI;
+    public void setUI(GraphicComponent window) {
+        this.window = window;
+    }
+
+    public GraphicComponent getWindow() {
+        return window;
+    }
+
+    public InputComponent getInput() {
+        return input;
     }
 
     public void setBunch(Bunch bunch){
@@ -39,13 +48,46 @@ public class WorkSpace {
         bunch.sendCommand(command);
     }
 
+    public int getPointer() {
+        return pointer;
+    }
+
+    public int getCountError() {
+        return countError;
+    }
+
+    public void getAnswer(String answer) {
+        if (answer.equals("Good")) {
+            nextCommand();
+        } else if (answer.equals("Error")) {
+            countError++;
+            Gdx.app.log("Error", "Error");
+        } else {
+            repeatCommand();
+        }
+    }
+
     public void nextCommand(){
-        pointer++;
+        if (pointer + 1 < code.size) {
+            pointer++;
+            window.updateWindow();
+            String command = code.get(pointer);
+            sendCommand(command);
+        } else {
+            sendCommand(GlobalVar.Stop);
+        }
+    }
+
+    public void repeatCommand() {
         String command=code.get(pointer);
         sendCommand(command);
     }
 
     public Array<String> getCode() {
         return code;
+    }
+
+    public void start() {
+        nextCommand();
     }
 }

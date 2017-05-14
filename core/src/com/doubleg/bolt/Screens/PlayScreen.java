@@ -1,15 +1,10 @@
 package com.doubleg.bolt.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g3d.shaders.BaseShader;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.doubleg.bolt.Bunch;
 import com.doubleg.bolt.Drawer;
 import com.doubleg.bolt.GlobalVar;
@@ -28,20 +23,21 @@ public class PlayScreen implements Screen {
     private GlobalVar vars;
 
     public PlayScreen(GlobalVar vars){
-        workSpace=new WorkSpace();
+        workSpace = new WorkSpace(vars);
         GraphicComponent tempV=new GraphicComponent(workSpace,vars);
         workSpace.setUI(tempV);
-        world=new World(workSpace);
+        world = new World();
         Bunch bunch=new Bunch(world.getPlayer(),workSpace);
         drawer=new Drawer(world,workSpace,vars);
-        Gdx.input.setInputProcessor(workSpace.UI.getUI());
+        InputMultiplexer multiplexer = new InputMultiplexer(workSpace.getInput().getUI(), workSpace.getWindow().getUI());
+        Gdx.input.setInputProcessor(multiplexer);
         this.vars=vars;
     }
 
     @Override
     public void show() {
-        Texture map=new Texture(Gdx.files.internal("57226.jpeg"));
-        drawer.setMapTexture(map,12,12);
+        Texture map = new Texture(Gdx.files.internal("tiles.png"));
+        drawer.setMapTexture(map, 2, 1);
     }
 
     @Override
@@ -49,6 +45,7 @@ public class PlayScreen implements Screen {
      Gdx.gl.glClearColor( 1, 1, 1, 1 );
      Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
         drawer.draw();
+        world.update(delta);
     }
 
     @Override

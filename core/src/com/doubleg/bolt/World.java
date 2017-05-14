@@ -1,6 +1,6 @@
 package com.doubleg.bolt;
 
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.Gdx;
 
 /**
  * Created by Dimaska on 07.05.2017.
@@ -11,22 +11,24 @@ public class World {
     int[][] map;
     int startX;
     int startY;
+    boolean play;
 
-    public World(WorkSpace work){
-        player=new Robot();
+    public World() {
+        player = new Robot(this);
         loadMap();
         setStartCoordinate();
         setPlayer();
+        play = false;
     }
 
     public void update(float deltaTime){
-
+        player.update(deltaTime);
     }
 
     public void loadMap(){
         map= new int[][]{
                 {1,1,1},
-                {1,0,1},
+                {1, 3, 1},
                 {1,0,1},
                 {1,0,1},
                 {1,0,1},
@@ -49,9 +51,10 @@ public class World {
                 break;
             }
         }
+        Gdx.app.log("World", "x: " + posStartX * GlobalVar.TileSize + " y: " + (map.length - posStartY) * GlobalVar.TileSize);
         player.setStartPosition(
-                posStartX*GlobalVar.TileSize+startX,
-                posStartY*GlobalVar.TileSize+startY);
+                posStartX * GlobalVar.TileSize,
+                (map.length - 1 - posStartY) * GlobalVar.TileSize);
     }
 
     private void setStartCoordinate(){
