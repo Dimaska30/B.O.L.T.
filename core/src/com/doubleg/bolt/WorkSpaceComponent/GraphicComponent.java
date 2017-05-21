@@ -25,7 +25,7 @@ public class GraphicComponent {
     public GraphicComponent(WorkSpace workSpace,GlobalVar vars){
         this.workSpace=workSpace;
         this.skin=vars.skin;
-        UI=new Stage();
+        UI = new Stage(vars.port, vars.batch);
         codes = new Array<Label>();
         UI.getBatch().setProjectionMatrix(vars.camera.combined);
         area=new Window("Code",skin);
@@ -43,6 +43,7 @@ public class GraphicComponent {
 
         for(int index=0;index<workSpace.getCode().size;index++){
             Label temp=new Label(workSpace.getCode().get(index),skin);
+            temp.setFontScale(2);
             temp.setPosition(0,index*temp.getHeight());
             temp.setColor(Color.BLACK);
             codes.add(temp);
@@ -57,6 +58,7 @@ public class GraphicComponent {
         codes.clear();
         for (int index = 0; index < workSpace.getCode().size; index++) {
             Label temp = new Label(workSpace.getCode().get(index), skin);
+            temp.setFontScale(2);
             temp.setPosition(0, index * temp.getHeight());
             temp.setColor(Color.BLACK);
             if (index == workSpace.getPointer())

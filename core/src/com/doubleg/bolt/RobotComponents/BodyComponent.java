@@ -5,4 +5,6 @@ package com.doubleg.bolt.RobotComponents;
  */
 
 public class BodyComponent {
+
+
 }

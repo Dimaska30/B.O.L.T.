@@ -1,5 +1,7 @@
 package com.doubleg.bolt;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * Created by Dimaska on 09.05.2017.
  */
@@ -25,5 +27,9 @@ public class Bunch {
 
     public void sendAswer(String answer){
         workSpace.getAnswer(answer);
+    }
+
+    public Vector2 getDir() {
+        return robot.getDir();
     }
 }

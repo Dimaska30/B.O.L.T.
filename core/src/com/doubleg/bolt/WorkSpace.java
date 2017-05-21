@@ -73,6 +73,7 @@ public class WorkSpace {
             window.updateWindow();
             String command = code.get(pointer);
             sendCommand(command);
+            input.reOrganization(bunch.getDir());
         } else {
             sendCommand(GlobalVar.Stop);
         }

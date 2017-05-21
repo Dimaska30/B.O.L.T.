@@ -1,6 +1,7 @@
 package com.doubleg.bolt.RobotComponents;
 
-import com.doubleg.bolt.GlobalVar;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import com.doubleg.bolt.Robot;
 import com.doubleg.bolt.World;
 
@@ -18,20 +19,29 @@ public class SensoryComponent {
     }
 
     public boolean AheadFreely() {
-        int[][] map = world.getMaps();
-        int x = (int) (robot.getPos().x / GlobalVar.TileSize);
-        int y = (int) (map.length - 1 - robot.getPos().y / GlobalVar.TileSize);
-        return (map[y + (int) robot.getDir().y][x + (int) robot.getDir().x] == 0)
-                || (map[y + (int) robot.getDir().y][x + (int) robot.getDir().x] == 2)
-                || (map[y + (int) robot.getDir().y][x + (int) robot.getDir().x] == 3);
+        Array<Rectangle> walls = world.getWall();
+        Rectangle playerBody = new Rectangle(robot.getPos().x + robot.getDir().y * 100, robot.getPos().y + robot.getDir().y * 100, 100, 100);
+        for (Rectangle rect : walls) {
+            if (rect.overlaps(playerBody)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean BackFreely() {
-        int[][] map = world.getMaps();
-        int x = (int) (robot.getPos().x / GlobalVar.TileSize);
-        int y = (int) (map.length - 1 - robot.getPos().y / GlobalVar.TileSize);
-        return (map[y - (int) robot.getDir().y][x - (int) robot.getDir().x] == 0)
-                || (map[y - (int) robot.getDir().y][x - (int) robot.getDir().x] == 2)
-                || (map[y - (int) robot.getDir().y][x - (int) robot.getDir().x] == 3);
+        Array<Rectangle> walls = world.getWall();
+        Rectangle playerBody = new Rectangle(robot.getPos().x - robot.getDir().y * 100, robot.getPos().y - robot.getDir().y * 100, 100, 100);
+        for (Rectangle rect : walls) {
+            if (rect.overlaps(playerBody)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean FindFlag() {
+
+        return true;
     }
 }

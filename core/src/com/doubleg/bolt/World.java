@@ -1,6 +1,13 @@
 package com.doubleg.bolt;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+
+import java.util.Iterator;
 
 /**
  * Created by Dimaska on 07.05.2017.
@@ -8,13 +15,16 @@ import com.badlogic.gdx.Gdx;
 
 public class World {
     Robot player;
-    int[][] map;
     int startX;
     int startY;
     boolean play;
+    TiledMap maps;
+    OrthographicCamera gameCamera;
+    Array<Rectangle> wall;
 
     public World() {
         player = new Robot(this);
+        wall = new Array<Rectangle>();
         loadMap();
         setStartCoordinate();
         setPlayer();
@@ -26,48 +36,41 @@ public class World {
     }
 
     public void loadMap(){
-        map= new int[][]{
-                {1,1,1},
-                {1, 3, 1},
-                {1,0,1},
-                {1,0,1},
-                {1,0,1},
-                {1,2,1},
-                {1,1,1}
-        };
+        maps = new TmxMapLoader().load("2.tmx");
+        Iterator<MapObject> i = maps.getLayers().get("objects").getObjects().iterator();
+        MapObject temp;
+        while (i.hasNext()) {
+            temp = i.next();
+            String type = (String) temp.getProperties().get("name");
+            if (type != null && type.equals("Wall")) {
+                Rectangle rect = new Rectangle();
+                rect.setX((Float) temp.getProperties().get("x"));
+                rect.setY((Float) temp.getProperties().get("y"));
+                rect.setWidth((Float) temp.getProperties().get("width"));
+                rect.setHeight((Float) temp.getProperties().get("height"));
+                wall.add(rect);
+            }
+        }
+
     }
 
     private void setPlayer(){
-        int posStartX=-1;
-        int posStartY=-1;
-        for(int y=0;y<map.length;y++){
-            for (int x=0;x<map[0].length;x++){
-                if(map[y][x]==2){
-                    posStartX=x;
-                    posStartY=y;
-                }
-            }
-            if(posStartX>=0 && posStartY>=0){
-                break;
-            }
-        }
-        Gdx.app.log("World", "x: " + posStartX * GlobalVar.TileSize + " y: " + (map.length - posStartY) * GlobalVar.TileSize);
-        player.setStartPosition(
-                posStartX * GlobalVar.TileSize,
-                (map.length - 1 - posStartY) * GlobalVar.TileSize);
+        float x = (Float) maps.getLayers().get("objects").getObjects().get("Generate").getProperties().get("x");
+        float y = (Float) maps.getLayers().get("objects").getObjects().get("Generate").getProperties().get("y");
+        player.setStartPosition(x, y);
     }
 
     private void setStartCoordinate(){
-        startX=(GlobalVar.ScreenWidth/8*5)/2 - map[0].length/2*GlobalVar.TileSize;
-        startY=GlobalVar.ScreenHeight/2 - map.length/2*GlobalVar.TileSize;
+        startX = 0;
+        startY = 0;
     }
 
     public Robot getPlayer() {
         return player;
     }
 
-    public int[][] getMaps() {
-        return map;
+    public TiledMap getMaps() {
+        return maps;
     }
 
     public int getStartX() {
@@ -76,5 +79,13 @@ public class World {
 
     public int getStartY() {
         return startY;
+    }
+
+    public Array<Rectangle> getWall() {
+        return wall;
+    }
+
+    public void setCamera(OrthographicCamera camera) {
+        gameCamera = camera;
     }
 }

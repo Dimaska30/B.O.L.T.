@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.doubleg.bolt.Bunch;
 import com.doubleg.bolt.Drawer;
 import com.doubleg.bolt.GlobalVar;
@@ -16,11 +15,12 @@ import com.doubleg.bolt.World;
  * Created by Dimaska on 07.05.2017.
  */
 
-public class PlayScreen implements Screen {
+public final class PlayScreen implements Screen {
     private World world;
     private Drawer drawer;
     private WorkSpace workSpace;
     private GlobalVar vars;
+
 
     public PlayScreen(GlobalVar vars){
         workSpace = new WorkSpace(vars);
@@ -36,8 +36,6 @@ public class PlayScreen implements Screen {
 
     @Override
     public void show() {
-        Texture map = new Texture(Gdx.files.internal("tiles.png"));
-        drawer.setMapTexture(map, 2, 1);
     }
 
     @Override

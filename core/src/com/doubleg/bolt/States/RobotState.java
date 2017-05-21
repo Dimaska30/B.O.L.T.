@@ -84,6 +84,7 @@ public enum RobotState implements State<Robot> {
         @Override
         public void update(Robot entity) {
             entity.goAhead();
+            entity.getLinks().getCommandsComponent().setAnswer("Good");
             entity.getLinks().getStatesComponent().changeState(Stand);
         }
 
@@ -94,9 +95,9 @@ public enum RobotState implements State<Robot> {
     GoBack(){
         @Override
         public void enter(Robot entity) {
-            //if(!entity.getLinks().getSensoryComponent().BackFreely()){
-            //    entity.getLinks().getCommandsComponent().setAnswer("Error");
-            //}
+            if (!entity.getLinks().getSensoryComponent().BackFreely()) {
+                entity.getLinks().getCommandsComponent().setAnswer("Error");
+            }
         }
 
         @Override
@@ -113,12 +114,26 @@ public enum RobotState implements State<Robot> {
     TurnLeft(){
         @Override
         public void enter(Robot entity) {
-
+            if (entity.getDir().x == 1 && entity.getDir().y == 0) {
+                entity.getDir().x = 0;
+                entity.getDir().y = 1;
+            } else if (entity.getDir().x == -1 && entity.getDir().y == 0) {
+                entity.getDir().x = 0;
+                entity.getDir().y = -1;
+            } else if (entity.getDir().x == 0 && entity.getDir().y == 1) {
+                entity.getDir().x = -1;
+                entity.getDir().y = 0;
+            } else if (entity.getDir().x == 0 && entity.getDir().y == -1) {
+                entity.getDir().x = 1;
+                entity.getDir().y = 0;
+            }
         }
 
         @Override
         public void update(Robot entity) {
-
+            entity.getLinks().getGraphicComponent().setCurrentTexture(Stand, entity.getDir());
+            entity.getLinks().getCommandsComponent().setAnswer("Good");
+            entity.getLinks().getStatesComponent().changeState(Stand);
         }
 
         @Override
@@ -129,12 +144,26 @@ public enum RobotState implements State<Robot> {
     TurnRight(){
         @Override
         public void enter(Robot entity) {
-
+            if (entity.getDir().x == 1 && entity.getDir().y == 0) {
+                entity.getDir().x = 0;
+                entity.getDir().y = -1;
+            } else if (entity.getDir().x == -1 && entity.getDir().y == 0) {
+                entity.getDir().x = 0;
+                entity.getDir().y = 1;
+            } else if (entity.getDir().x == 0 && entity.getDir().y == 1) {
+                entity.getDir().x = 1;
+                entity.getDir().y = 0;
+            } else if (entity.getDir().x == 0 && entity.getDir().y == -1) {
+                entity.getDir().x = -1;
+                entity.getDir().y = 0;
+            }
         }
 
         @Override
         public void update(Robot entity) {
-
+            entity.getLinks().getGraphicComponent().setCurrentTexture(Stand, entity.getDir());
+            entity.getLinks().getCommandsComponent().setAnswer("Good");
+            entity.getLinks().getStatesComponent().changeState(Stand);
         }
 
         @Override

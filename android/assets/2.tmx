@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="2017.05.16" orientation="orthogonal" renderorder="left-down" width="3" height="9" tilewidth="100" tileheight="100" nextobjectid="9">
+ <tileset firstgid="1" name="tileset" tilewidth="100" tileheight="100" tilecount="4" columns="2">
+  <image source="tile_water.png" trans="ff00ff" width="200" height="200"/>
+ </tileset>
+ <layer name="tiles" width="3" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYELCLEhsRgrYzGjmgjAAC/AANQ==
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="1" name="Flag" x="100" y="100" width="100" height="100"/>
+  <object id="2" name="Generate" x="100" y="700" width="100" height="100"/>
+  <object id="4" name="Wall" x="0.666667" y="0" width="298" height="100"/>
+  <object id="5" name="Wall" x="0" y="802" width="300" height="100.667"/>
+  <object id="6" name="Wall" x="209.333" y="100" width="89.3333" height="687.333"/>
+  <object id="7" name="Wall" x="0" y="101.333" width="93.3333" height="691.333"/>
+ </objectgroup>
+</map>
